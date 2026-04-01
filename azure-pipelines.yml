@@ -1,0 +1,35 @@
+trigger: none
+
+pool: infra_pipeline01
+
+stages:
+  - stage: 
+    jobs:
+      - job: 
+        steps:
+          - task: TerraformInstaller@1
+            inputs:
+              terraformVersion: 'latest'
+          - task: TerraformTask@5
+            inputs:
+              provider: 'azurerm'
+              command: 'init'
+              backendServiceArm: 'pipeline'
+              backendAzureRmStorageAccountName: 'storagepipelin04'
+              backendAzureRmContainerName: 'pipeline'
+              backendAzureRmKey: 'terrafort.tfstate'
+          - task: TerraformTask@5
+            inputs:
+              provider: 'azurerm'
+              command: 'validate'
+          - task: TerraformTask@5
+            inputs:
+              provider: 'azurerm'
+              command: 'plan'
+              environmentServiceNameAzureRM: 'pipeline'
+          - task: TerraformTask@5
+            inputs:
+              provider: 'azurerm'
+              command: 'apply'
+              environmentServiceNameAzureRM: 'pipeline'
+        
