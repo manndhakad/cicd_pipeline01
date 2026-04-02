@@ -1,6 +1,6 @@
 trigger: none
 
-pool: infra_pipeline01
+pool: infra_pipeline02
 
 stages:
   - stage: 
